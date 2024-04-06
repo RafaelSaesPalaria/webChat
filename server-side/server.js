@@ -1,6 +1,8 @@
 const http = require('http')
 const fs = require('fs')
 
+let messages = ["Hi"]
+
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
 
@@ -10,13 +12,16 @@ const app = http.createServer((req, res) => {
         case '/style.css':
             path+='style.css'
             break
+        case '/index.js':
+            res.setHeader('Content-Type','text/javascript')
+            path+='index.js'
+            break;
         case '/':
         default:
             path+='index.html'
             break
     }
     res.end(fs.readFileSync(path))
-
 })
 
 app.listen(3000, () => {
