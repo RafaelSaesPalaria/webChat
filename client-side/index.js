@@ -7,10 +7,26 @@ let content = {
     }
 }
 
-xhr.open('GET',location.href.concat(":messages"))
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === xhr.DONE) {
-        console.log(JSON.stringify(JSON.parse(xhr.responseText)))
+receiveMessages()
+
+function receiveMessages() {
+    xhr.open('GET',location.href.concat(":messages"))
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE &
+            xhr.status == 200) {
+            content.general.textContent = ''
+            let messages = JSON.parse(xhr.responseText)
+            for (let message of messages) {
+                console.log(message)
+                writeMessage(message)
+            }
+        }
     }
+    xhr.send()
 }
-xhr.send()
+
+function writeMessage(message) {
+    let p = document.createElement('p')
+    p.textContent = message
+    content.general.appendChild(p)
+}

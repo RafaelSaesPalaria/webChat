@@ -1,7 +1,7 @@
 const http = require('http')
 const fs = require('fs')
 
-let messages = ["Hi",'Hello','Bye',' My Name, is kira yoshikage', '123']
+let messages = ["Hi",'World']
 
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
