@@ -7,7 +7,8 @@ let content = {
     }
 }
 
-receiveMessages()
+setInterval(receiveMessages,1000)
+
 
 content.me.send.addEventListener("click", function() {
     sendMessage(content.me.text.value)
