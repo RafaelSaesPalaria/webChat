@@ -9,6 +9,15 @@ let content = {
 
 receiveMessages()
 
+content.me.send.addEventListener("click", function() {
+    sendMessage(content.me.text.value)
+})
+
+function sendMessage(message) {
+    xhr.open('POST',location.href.concat(':messages'))
+    xhr.send(message)
+}
+
 function receiveMessages() {
     xhr.open('GET',location.href.concat(":messages"))
     xhr.onreadystatechange = function() {

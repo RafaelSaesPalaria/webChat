@@ -22,7 +22,14 @@ const app = http.createServer((req, res) => {
                 res.end(JSON.stringify(messages))
                 return
             } else if (req.method === 'POST') {
-                // TODO
+                let body = ''
+                req.on('data', (chunk) => {
+                    body+=chunk
+                })
+                req.on('end',() => {
+                    messages.push(body)
+                })
+                return
             }
             break;
         case '/':
