@@ -9,6 +9,8 @@ let content = {
 
 xhr.open('GET',location.href.concat(":messages"))
 xhr.onreadystatechange = function() {
-    console.log(xhr.responseText)
+    if (xhr.readyState === xhr.DONE) {
+        console.log(JSON.stringify(JSON.parse(xhr.responseText)))
+    }
 }
 xhr.send()
