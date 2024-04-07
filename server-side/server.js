@@ -1,7 +1,8 @@
 const http = require('http')
 const fs = require('fs')
 
-let messages = ["Hi",'World']
+let password = 123
+let messages = []
 
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
@@ -9,14 +10,24 @@ const app = http.createServer((req, res) => {
     let path = '../client-side/'
 
     switch (req.url) {
-        case '/style.css':
-            path+='style.css'
+        case 'chat.css':
+            path+='chat.css'
             break
-        case '/index.js':
+        case 'chat.js':
             res.setHeader('Content-Type','text/javascript')
-            path+='index.js'
+            path+='chat.js'
+            break
+        case 'chat.html':
+            path+='chat.html'
+            break
+        case '/login.css':
+            path+='login.css'
+            break
+        case '/login.js':
+            res.setHeader('Content-Type','text/javascript')
+            path+='login.js'
             break;
-        case '/:messages':
+        case '/chat:messages':
             if (req.method === 'GET') {
                 res.setHeader('Content-Type','application/json')
                 res.end(JSON.stringify(messages))
@@ -34,7 +45,7 @@ const app = http.createServer((req, res) => {
             break;
         case '/':
         default:
-            path+='index.html'
+            path+='login.html'
             break
     }
     res.end(fs.readFileSync(path))

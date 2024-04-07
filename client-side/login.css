@@ -1,0 +1,40 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+div#title {
+    padding: 7px;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 18px;
+}
+
+main {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    border: 1px solid black;
+    width: 500px;
+    height: 250px;
+    padding-top: 50px;
+}
+
+main input {
+    display: block;
+    padding: 8px;
+    font-size: 18px;
+    margin: 15px auto;
+}
+
+main input[type=submit] {
+    padding: 8px 20px;
+    width: 240px;
+}
