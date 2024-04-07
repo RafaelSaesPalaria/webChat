@@ -10,18 +10,33 @@ const app = http.createServer((req, res) => {
     let path = '../client-side/'
 
     switch (req.url) {
-        case 'chat.css':
+        case '/chat.css':
             path+='chat.css'
             break
-        case 'chat.js':
+        case '/chat.js':
             res.setHeader('Content-Type','text/javascript')
             path+='chat.js'
             break
-        case 'chat.html':
+        case '/chat.html':
             path+='chat.html'
             break
         case '/login.css':
             path+='login.css'
+            break
+        case '/:login':
+            if (req.method === 'POST') {
+                let body = ''
+                req.on('data', (chunk) => {
+                    body+=chunk
+                })
+                req.on('end',() => {
+                    body = (JSON.parse(body))
+                    if (body.password==password) {
+                        res.end(fs.readFileSync(path.concat('chat.html')))
+                    }
+                })
+                return
+            }
             break
         case '/login.js':
             res.setHeader('Content-Type','text/javascript')
