@@ -42,6 +42,7 @@ const app = http.createServer((req, res) => {
             res.setHeader('Content-Type','text/javascript')
             path+='login.js'
             break;
+        case '/:messages':
         case '/chat:messages':
             if (req.method === 'GET') {
                 res.setHeader('Content-Type','application/json')
