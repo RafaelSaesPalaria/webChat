@@ -7,7 +7,7 @@ let content = {
     }
 }
 
-setInterval(receiveMessages,1000)
+setInterval(receiveMessages,100)
 
 
 content.me.send.addEventListener("click", function() {
@@ -36,7 +36,20 @@ function receiveMessages() {
 }
 
 function writeMessage(message) {
-    let p = document.createElement('p')
-    p.textContent = message
-    content.general.appendChild(p)
+    let div = document.createElement('div')
+    div.setAttribute('id','message')
+    
+    let messages = document.createElement('span')
+    messages.setAttribute('id','message')
+
+    let author = document.createElement('span')
+    author.setAttribute('id','author')
+
+    messages.textContent = message
+    author.textContent = 'Null'
+
+    div.appendChild(messages)
+    div.appendChild(author)
+
+    content.general.appendChild(div)
 }
