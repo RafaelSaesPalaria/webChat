@@ -12,7 +12,11 @@ content.submit.addEventListener("click",() => {
     console.log(name)
     console.log(password)
     xhr.open('POST',location.href.concat(':login'))
-    console.log(xhr.response)
     xhr.send(JSON.stringify({"name":name,"password":password}))
+    xhr.onreadystatechange = function() {
+        if (xhr.status == 200 & xhr.readyState == xhr.DONE) {
+            document.write(xhr.response)
+        }
+    }
 })
 

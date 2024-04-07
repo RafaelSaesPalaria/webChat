@@ -35,8 +35,8 @@ const app = http.createServer((req, res) => {
                         res.end(fs.readFileSync(path.concat('chat.html')))
                     }
                 })
-                return
             }
+            return
             break
         case '/login.js':
             res.setHeader('Content-Type','text/javascript')

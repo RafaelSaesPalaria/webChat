@@ -24,7 +24,11 @@ main {
     border: 1px solid black;
     width: 500px;
     height: 250px;
-    padding-top: 50px;
+    padding-top: 30px;
+}
+
+main h1 {
+    text-align: center;
 }
 
 main input {
