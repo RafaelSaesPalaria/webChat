@@ -1,8 +1,10 @@
 const http = require('http')
 const fs = require('fs')
+const rd = require('readline-sync')
 
-let password = 123
 let messages = []
+let port = rd.question('Port: ')
+let password = rd.question('Password: ')
 
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
@@ -67,6 +69,6 @@ const app = http.createServer((req, res) => {
     res.end(fs.readFileSync(path))
 })
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('Server open')
 })

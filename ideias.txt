@@ -1,0 +1,6 @@
+Idionar a habilidade de responder alguem
+pegar o nome da pessoa
+trocar o xmlhttprequest pra websocket
+melhorar a segurança do server
+atrelar um autor ao seu comentário
+atrelar uma resposta a um comentário
