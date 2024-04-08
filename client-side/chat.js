@@ -7,6 +7,7 @@ let content = {
     }
 }
 
+let namei = ''
 setInterval(receiveMessages,100)
 
 
@@ -16,7 +17,8 @@ content.me.send.addEventListener("click", function() {
 
 function sendMessage(message) {
     xhr.open('POST',location.href.concat(':messages'))
-    xhr.send(message)
+    console.log(namei)
+    xhr.send(JSON.stringify({'name':namei,'message':message}))
 }
 
 function receiveMessages() {
@@ -25,11 +27,22 @@ function receiveMessages() {
         if (xhr.readyState === xhr.DONE &
             xhr.status == 200) {
             content.general.textContent = ''
-            let messages = JSON.parse(xhr.responseText)
-            for (let message of messages) {
-                console.log(message)
-                writeMessage(message)
+            let messages = JSON.parse(xhr.response)
+            console.log(messages)
+            for (let message in messages) {
+                writeMessage(messages[message])
             }
+        }
+    }
+    xhr.send()
+}
+
+function receiveMessage(messageType) {
+    xhr.open('GET',location.href.concat(messageType))
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE &
+            xhr.status == 200) {""
+                namei = xhr.response
         }
     }
     xhr.send()
@@ -45,8 +58,8 @@ function writeMessage(message) {
     let author = document.createElement('span')
     author.setAttribute('id','author')
 
-    messages.textContent = message
-    author.textContent = 'Null'
+    messages.textContent = message["message"]
+    author.textContent = message["author"]
 
     div.appendChild(messages)
     div.appendChild(author)
