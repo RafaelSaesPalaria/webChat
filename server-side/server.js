@@ -5,7 +5,6 @@ const rd = require('readline-sync')
 let messages = []
 let port = rd.question('Port: ')
 let password = rd.question('Password: ')
-let lastName = ''
 
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
@@ -46,11 +45,6 @@ const app = http.createServer((req, res) => {
             res.setHeader('Content-Type','text/javascript')
             path+='login.js'
             break;
-        case '/:name':
-            res.setHeader('Content-Type','application/json')
-            res.end(JSON.stringify(lastName))
-            return
-            break
         case '/:messages':
         case '/chat:messages':
             if (req.method === 'GET') {

@@ -7,8 +7,7 @@ let content = {
     }
 }
 
-let namei = ""
-receiveMessage(':name')
+let namei = window.sessionStorage.getItem("name")
 setInterval(receiveMessages,100)
 
 
@@ -31,17 +30,6 @@ function receiveMessages() {
             for (let message in messages) {
                 writeMessage(messages[message])
             }
-        }
-    }
-    xhr.send()
-}
-
-function receiveMessage(messageType) {
-    xhr.open('GET',location.href.concat(messageType))
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === xhr.DONE &
-            xhr.status == 200) {
-                namei = JSON.parse(xhr.response)
         }
     }
     xhr.send()

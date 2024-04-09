@@ -13,6 +13,7 @@ content.submit.addEventListener("click",() => {
     xhr.send(JSON.stringify({"name":name,"password":password}))
     xhr.onreadystatechange = function() {
         if (xhr.status == 200 & xhr.readyState == xhr.DONE) {
+            window.sessionStorage.setItem("name",name)
             document.open()
             document.write(xhr.response)
             document.close()
