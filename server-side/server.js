@@ -47,17 +47,19 @@ const app = http.createServer((req, res) => {
             break;
         case '/:messages':
         case '/chat:messages':
-            if (req.method === 'GET') {
-                res.setHeader('Content-Type','application/json')
-                res.end(JSON.stringify(messages))
-                return
-            } else if (req.method === 'POST') {
+            if (req.method === 'POST') {
                 let body = ''
                 req.on('data', (chunk) => {
                     body+=chunk
                 })
                 req.on('end',() => {
-                    messages.push(JSON.parse(body))
+                    console.log(body)
+                    if (body.todo==='server-write') {
+                        messages.push(JSON.parse(body))
+                        res.end()
+                    } else if (body.todo==='server-read') {
+                        res.end(JSON.stringify(messages))
+                    }
                 })
                 return
             }

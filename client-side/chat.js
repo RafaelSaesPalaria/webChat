@@ -7,6 +7,8 @@ let content = {
     }
 }
 
+let messages = []
+
 let namei = window.sessionStorage.getItem("name")
 setInterval(receiveMessages,100)
 
@@ -17,22 +19,27 @@ content.me.send.addEventListener("click", function() {
 
 function sendMessage(message) {
     xhr.open('POST',location.href.concat(':messages'))
-    xhr.send(JSON.stringify({'name':namei,'message':message}))
+    xhr.send(JSON.stringify({
+        'todo':'server-read',
+        'name':namei,
+        'message':message}))
 }
 
 function receiveMessages() {
-    xhr.open('GET',location.href.concat(":messages"))
+    xhr.open('POST',location.href.concat(":messages"),true)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE &
             xhr.status == 200) {
             content.general.textContent = ''
-            let messages = JSON.parse(xhr.response)
+            messages = JSON.parse(xhr.response)
             for (let message in messages) {
                 writeMessage(messages[message])
             }
         }
     }
-    xhr.send()
+    xhr.send(JSON.stringify({
+        'todo':'server-write',
+        'msg-count':Object.keys(messages).length}))
 }
 
 function writeMessage(message) {
