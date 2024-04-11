@@ -2,9 +2,13 @@ const http = require('http')
 const fs = require('fs')
 const rd = require('readline-sync')
 
+let devMode = true
 let messages = []
-let port = rd.question('Port: ')
-let password = rd.question('Password: ')
+
+console.log('Developer mode: ' + devMode)
+
+let port = devMode ? 3000 : rd.question('Port: ')
+let password = devMode ? 123 : rd.question('Password: ')
 
 const app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
@@ -53,11 +57,12 @@ const app = http.createServer((req, res) => {
                     body+=chunk
                 })
                 req.on('end',() => {
+                    body = JSON.parse(body)
                     console.log(body)
-                    if (body.todo==='server-write') {
-                        messages.push(JSON.parse(body))
+                    if (body['todo']==='write-on-server') {
+                        messages.push(body)
                         res.end()
-                    } else if (body.todo==='server-read') {
+                    } else if (body['todo']==='read-on-server') {
                         res.end(JSON.stringify(messages))
                     }
                 })

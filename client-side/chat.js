@@ -20,7 +20,7 @@ content.me.send.addEventListener("click", function() {
 function sendMessage(message) {
     xhr.open('POST',location.href.concat(':messages'))
     xhr.send(JSON.stringify({
-        'todo':'server-read',
+        'todo':'write-on-server',
         'name':namei,
         'message':message}))
 }
@@ -38,7 +38,7 @@ function receiveMessages() {
         }
     }
     xhr.send(JSON.stringify({
-        'todo':'server-write',
+        'todo':'read-on-server',
         'msg-count':Object.keys(messages).length}))
 }
 
