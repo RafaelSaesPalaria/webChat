@@ -17,6 +17,11 @@ content.me.send.addEventListener("click", function() {
     sendMessage(content.me.text.value)
 })
 
+/**
+ * @Called When content.me.send is clicked
+ * @Do ask the server to write the message/name
+ * @param {String} message the message in question
+ */
 function sendMessage(message) {
     xhr.open('POST',location.href.concat(':messages'))
     xhr.send(JSON.stringify({
@@ -25,6 +30,10 @@ function sendMessage(message) {
         'message':message}))
 }
 
+/**
+ * @Called at every 100ms
+ * @Do Receive the messages from the server
+ */
 function receiveMessages() {
     xhr.open('POST',location.href.concat(":messages"),true)
     xhr.onreadystatechange = function() {
@@ -42,6 +51,11 @@ function receiveMessages() {
         'msg-count':Object.keys(messages).length}))
 }
 
+/**
+ * @Called After the client receive the server's messages
+ * @Do write the messages of the server on the client
+ * @param {{name:String, message:String}} message 
+ */
 function writeMessage(message) {
     let div = document.createElement('div')
     div.setAttribute('id','message')
