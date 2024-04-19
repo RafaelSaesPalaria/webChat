@@ -20,19 +20,6 @@ app = http.createServer((req, res) => {
     let path = '../client-side/'
 
     switch (req.url) {
-        case '/chat.css':
-            path+='styles/chat.css'
-            break
-        case '/chat.js':
-            res.setHeader('Content-Type','text/javascript')
-            path+='scripts/chat.js'
-            break
-        case '/chat.html':
-            path+='view/chat.html'
-            break
-        case '/login.css':
-            path+='styles/login.css'
-            break
         case '/:login':
             if (req.method === 'POST') {
                 let body = ''
@@ -49,10 +36,6 @@ app = http.createServer((req, res) => {
             }
             return
             break
-        case '/login.js':
-            res.setHeader('Content-Type','text/javascript')
-            path+='scripts/login.js'
-            break;
         case '/:messages':
         case '/chat:messages':
             if (req.method === 'POST') {
@@ -73,13 +56,6 @@ app = http.createServer((req, res) => {
                 return
             }
             break;
-        case '/':
-        default:
-            path+='view/login.html'
-            break
-    }
-    res.end(fs.readFileSync(path))
-})
 */
 
 // SERVER SETTINGS
@@ -94,8 +70,20 @@ app.listen(port, () => {
 // MIDDLEWARE
 app.use(express.static('./../client-side/public'))
 
-app.get('/chat', (req, res) => {
-    res.render('chat.ejs')
+app.use('/:login', (req, res) => {
+    if (req.method === 'POST') {
+        let body = ''
+        req.on('data', (chunk) => {
+            body+=chunk
+        })
+        req.on('end',() => {
+            body = (JSON.parse(body))
+            if (body.password==password) {
+                lastName = body.name
+                res.render('chat.ejs')
+            }
+        })
+    }
 })
 
 app.use((req, res) => {
