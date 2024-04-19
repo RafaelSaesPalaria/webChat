@@ -1,8 +1,8 @@
 const http = require('http')
 const fs = require('fs')
 const rd = require('readline-sync')
-const ejs = require('ejs')
-const express = require('express')()
+const express = require('express')
+const app = express()
 
 let devMode = true
 let messages = []
@@ -13,7 +13,8 @@ let serverName = devMode ? 'Test' : rd.question('Server name: ')
 let port = devMode ? 3000 : rd.question('Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
-const app = http.createServer((req, res) => {
+/*
+app = http.createServer((req, res) => {
     console.log('Someone is trying to acess: '.concat(req.url))
 
     let path = '../client-side/'
@@ -79,7 +80,13 @@ const app = http.createServer((req, res) => {
     }
     res.end(fs.readFileSync(path))
 })
+*/
+app.set('view engine','ejs')
+app.set('views','./../client-side/views/')
 
+app.use((req, res) => {
+    res.render('login.ejs',{})
+})
 app.listen(port, () => {
     console.log('Server open')
 })
