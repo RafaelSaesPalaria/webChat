@@ -81,12 +81,23 @@ app = http.createServer((req, res) => {
     res.end(fs.readFileSync(path))
 })
 */
+
+// SERVER SETTINGS
+
 app.set('view engine','ejs')
 app.set('views','./../client-side/views/')
 
-app.use((req, res) => {
-    res.render('login.ejs',{})
-})
 app.listen(port, () => {
     console.log('Server open')
+})
+
+// MIDDLEWARE
+app.use(express.static('./../client-side/public'))
+
+app.get('/chat', (req, res) => {
+    res.render('chat.ejs')
+})
+
+app.use((req, res) => {
+    res.status(404).render('login.ejs',{})
 })
