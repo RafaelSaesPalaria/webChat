@@ -1,12 +1,15 @@
 const http = require('http')
 const fs = require('fs')
 const rd = require('readline-sync')
+const ejs = require('ejs')
+const express = require('express')()
 
 let devMode = true
 let messages = []
 
 console.log('Developer mode: ' + devMode)
 
+let serverName = devMode ? 'Test' : rd.question('Server name: ')
 let port = devMode ? 3000 : rd.question('Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
