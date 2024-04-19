@@ -70,22 +70,45 @@ app.listen(port, () => {
 // MIDDLEWARE
 app.use(express.static('./../client-side/public'))
 
-app.use('/:login', (req, res) => {
-    if (req.method === 'POST') {
-        let body = ''
+app.use((req, res, next) => {
+    console.log('User requesting: ',req.url)
+    next()
+})
+
+app.post('/login', (req, res) => {
+    let body = ''
+    req.on('data', (chunk) => {
+        body+=chunk
+    })
+    req.on('end',() => {
+        body = (JSON.parse(body))
+        if (body.password==password) {
+            lastName = body.name
+            res.render('chat.ejs')
+        }
+    })
+})
+
+app.post('/messages', (req, res) => {
+    let body = ''
         req.on('data', (chunk) => {
             body+=chunk
         })
         req.on('end',() => {
-            body = (JSON.parse(body))
-            if (body.password==password) {
-                lastName = body.name
-                res.render('chat.ejs')
+            body = JSON.parse(body)
+            console.log(body)
+            if (body['todo']==='write-on-server') {
+                messages.push(body)
+                res.end()
+            } else if (body['todo']==='read-on-server') {
+                res.end(JSON.stringify(messages))
             }
         })
-    }
 })
-
+app.use('/',(req, res) => {
+    res.render('login.ejs',{})
+})
 app.use((req, res) => {
+    console.log('404: ',req.url)
     res.status(404).render('login.ejs',{})
 })

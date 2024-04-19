@@ -23,7 +23,7 @@ content.me.send.addEventListener("click", function() {
  * @param {String} message the message in question
  */
 function sendMessage(message) {
-    xhr.open('POST',location.href.concat(':messages'))
+    xhr.open('POST',location.href.concat('messages'))
     xhr.send(JSON.stringify({
         'todo':'write-on-server',
         'name':namei,
@@ -35,7 +35,7 @@ function sendMessage(message) {
  * @Do Receive the messages from the server
  */
 function receiveMessages() {
-    xhr.open('POST',location.href.concat(":messages"),true)
+    xhr.open('POST',location.href.concat("messages"),true)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE &
             xhr.status == 200) {
