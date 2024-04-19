@@ -17,17 +17,17 @@ const app = http.createServer((req, res) => {
 
     switch (req.url) {
         case '/chat.css':
-            path+='chat.css'
+            path+='styles/chat.css'
             break
         case '/chat.js':
             res.setHeader('Content-Type','text/javascript')
-            path+='chat.js'
+            path+='scripts/chat.js'
             break
         case '/chat.html':
-            path+='chat.html'
+            path+='view/chat.html'
             break
         case '/login.css':
-            path+='login.css'
+            path+='styles/login.css'
             break
         case '/:login':
             if (req.method === 'POST') {
@@ -39,7 +39,7 @@ const app = http.createServer((req, res) => {
                     body = (JSON.parse(body))
                     if (body.password==password) {
                         lastName = body.name
-                        res.end(fs.readFileSync(path.concat('chat.html')))
+                        res.end(fs.readFileSync(path.concat('view/chat.html')))
                     }
                 })
             }
@@ -47,7 +47,7 @@ const app = http.createServer((req, res) => {
             break
         case '/login.js':
             res.setHeader('Content-Type','text/javascript')
-            path+='login.js'
+            path+='scripts/login.js'
             break;
         case '/:messages':
         case '/chat:messages':
@@ -71,7 +71,7 @@ const app = http.createServer((req, res) => {
             break;
         case '/':
         default:
-            path+='login.html'
+            path+='view/login.html'
             break
     }
     res.end(fs.readFileSync(path))
