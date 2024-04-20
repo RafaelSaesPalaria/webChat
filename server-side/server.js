@@ -6,6 +6,7 @@ const app = express()
 
 // SERVER SETTINGS
 
+let messageLimit = 11
 let devMode = true
 let messages = []
 
@@ -60,6 +61,9 @@ app.post('/messages', (req, res) => {
             console.log(body)
             if (body['todo']==='write-on-server') {
                 messages.push(body)
+                if (messages.length>messageLimit) {
+                    messages.shift()
+                }
                 res.end()
             } else if (body['todo']==='read-on-server') {
                 res.end(JSON.stringify(messages))
