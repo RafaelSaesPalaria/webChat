@@ -4,6 +4,8 @@ const rd = require('readline-sync')
 const express = require('express')
 const app = express()
 
+// SERVER SETTINGS
+
 let devMode = true
 let messages = []
 
@@ -13,52 +15,11 @@ let serverName = devMode ? 'Test' : rd.question('Server name: ')
 let port = devMode ? 3000 : rd.question('Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
-/*
-app = http.createServer((req, res) => {
-    console.log('Someone is trying to acess: '.concat(req.url))
+let serverData = {
+    serverName
+}
 
-    let path = '../client-side/'
-
-    switch (req.url) {
-        case '/:login':
-            if (req.method === 'POST') {
-                let body = ''
-                req.on('data', (chunk) => {
-                    body+=chunk
-                })
-                req.on('end',() => {
-                    body = (JSON.parse(body))
-                    if (body.password==password) {
-                        lastName = body.name
-                        res.end(fs.readFileSync(path.concat('view/chat.html')))
-                    }
-                })
-            }
-            return
-            break
-        case '/:messages':
-        case '/chat:messages':
-            if (req.method === 'POST') {
-                let body = ''
-                req.on('data', (chunk) => {
-                    body+=chunk
-                })
-                req.on('end',() => {
-                    body = JSON.parse(body)
-                    console.log(body)
-                    if (body['todo']==='write-on-server') {
-                        messages.push(body)
-                        res.end()
-                    } else if (body['todo']==='read-on-server') {
-                        res.end(JSON.stringify(messages))
-                    }
-                })
-                return
-            }
-            break;
-*/
-
-// SERVER SETTINGS
+// EXPRESS SETTINGS
 
 app.set('view engine','ejs')
 app.set('views','./../client-side/views/')
@@ -84,7 +45,7 @@ app.post('/login', (req, res) => {
         body = (JSON.parse(body))
         if (body.password==password) {
             lastName = body.name
-            res.render('chat.ejs')
+            res.render('chat.ejs',{serverData})
         }
     })
 })
@@ -106,9 +67,9 @@ app.post('/messages', (req, res) => {
         })
 })
 app.use('/',(req, res) => {
-    res.render('login.ejs',{})
+    res.render('login.ejs',{serverData})
 })
 app.use((req, res) => {
     console.log('404: ',req.url)
-    res.status(404).render('login.ejs',{})
+    res.status(404).render('login.ejs',{serverData})
 })
