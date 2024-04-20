@@ -12,12 +12,13 @@ let messages = []
 
 console.log('Developer mode: ' + devMode)
 
-let serverName = devMode ? 'Test' : rd.question('Server name: ')
+let serverName = devMode ? 'MyServer' : rd.question('Server name: ')
 let port = devMode ? 3000 : rd.question('Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
 let serverData = {
-    serverName
+    serverName,
+    hasPassword: password ? true : false 
 }
 
 // EXPRESS SETTINGS
@@ -44,7 +45,7 @@ app.post('/login', (req, res) => {
     })
     req.on('end',() => {
         body = (JSON.parse(body))
-        if (body.password==password) {
+        if (body.password==password || password===undefined) {
             lastName = body.name
             res.render('chat.ejs',{serverData})
         }

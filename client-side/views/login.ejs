@@ -14,7 +14,9 @@
     <main>
         <h1><%= serverData.serverName%></h1>
         <input type="text" name="" id="name" placeholder="Your Name">
+        <% if (serverData.hasPassword) {%>
         <input type="password" name="" id="password" placeholder="Server Password">
+        <%}%>
         <input type="submit" value="Enter" id="submit">
     </main>
     <script src="scripts/login.js" type="module" defer></script>

@@ -8,7 +8,7 @@ let content = {
 
 content.submit.addEventListener("click",() => {
     let name = content.namei.value
-    let password = content.password.value
+    let password = content.password ? content.password.value : undefined 
     xhr.open('POST',location.href.concat('login'))
     xhr.send(JSON.stringify({"name":name,"password":password}))
     xhr.onreadystatechange = function() {
