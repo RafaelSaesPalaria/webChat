@@ -24,7 +24,7 @@ let serverData = {
 }
 
 // WEBSOCKET
-/*
+
 let wss = new ws.Server({port:3001}, () => {
     console.log('Web socket created')
 })
@@ -34,13 +34,15 @@ let connections = []
 wss.on('connection', (stream) => {
     let con = stream
 
-    wss.on('message', (message) => {
-        console.log(message)
+    stream.on('message', (message) => {
+        console.log(message.toString())
+        connections.forEach(con => {
+            con.send(message.toString())
+        })
     })
 
     connections.push(con)
 })
-*/
 // EXPRESS SETTINGS
 
 app.set('view engine','ejs')

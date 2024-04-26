@@ -1,5 +1,3 @@
-let wss = new WebSocket({port:3001})
-
 let content = {
     general: document.querySelector('div#general-talk'),
     me : {
@@ -9,13 +7,21 @@ let content = {
 }
 
 let messages = []
-
 let namei = window.sessionStorage.getItem("name")
 
 
 content.me.send.addEventListener("click", function() {
     sendMessage(content.me.text.value)
 })
+
+let wss = new WebSocket('ws://localhost:3001')
+wss.onopen = () => {
+    wss.onmessage = (message) => {
+        console.log(JSON.parse(message.data))
+        writeMessage(JSON.parse(message.data))
+    }
+}
+    
 
 /**
  * @Called When content.me.send is clicked
@@ -28,16 +34,6 @@ function sendMessage(message) {
         'name':namei,
         'message':message}
     wss.send(JSON.stringify(msg))
-}
-
-/**
- * @Called when a message is sent
- * @Do Receive the messages from the server
- */
-function receiveMessages() {
-    wss.on('message', (message) => {
-        console.log(message)
-    })
 }
 
 /**
