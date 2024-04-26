@@ -14,7 +14,9 @@ content.me.send.addEventListener("click", function() {
     sendMessage(content.me.text.value)
 })
 
-let wss = new WebSocket('ws://localhost:3001')
+let url = window.location.href.replace('http://','').split(':')[0]
+
+let wss = new WebSocket('ws://'+url+':3001')
 wss.onopen = () => {
     wss.onmessage = (message) => {
         console.log(JSON.parse(message.data))
