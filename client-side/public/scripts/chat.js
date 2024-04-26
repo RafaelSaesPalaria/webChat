@@ -1,4 +1,5 @@
-let xhr = new XMLHttpRequest()
+let wss = new WebSocket({port:3001})
+
 let content = {
     general: document.querySelector('div#general-talk'),
     me : {
@@ -10,7 +11,6 @@ let content = {
 let messages = []
 
 let namei = window.sessionStorage.getItem("name")
-setInterval(receiveMessages,100)
 
 
 content.me.send.addEventListener("click", function() {
@@ -23,32 +23,21 @@ content.me.send.addEventListener("click", function() {
  * @param {String} message the message in question
  */
 function sendMessage(message) {
-    xhr.open('POST',location.href.concat('messages'))
-    xhr.send(JSON.stringify({
-        'todo':'write-on-server',
+    let msg = 
+        {'todo':'write-on-server',
         'name':namei,
-        'message':message}))
+        'message':message}
+    wss.send(JSON.stringify(msg))
 }
 
 /**
- * @Called at every 100ms
+ * @Called when a message is sent
  * @Do Receive the messages from the server
  */
 function receiveMessages() {
-    xhr.open('POST',location.href.concat("messages"),true)
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === xhr.DONE &
-            xhr.status == 200) {
-            content.general.textContent = ''
-            messages = JSON.parse(xhr.response)
-            for (let message in messages) {
-                writeMessage(messages[message])
-            }
-        }
-    }
-    xhr.send(JSON.stringify({
-        'todo':'read-on-server',
-        'msg-count':Object.keys(messages).length}))
+    wss.on('message', (message) => {
+        console.log(message)
+    })
 }
 
 /**
