@@ -8,9 +8,7 @@ const path = require('path');
 
 // SERVER SETTINGS
 
-let messageLimit = 11
 let devMode = true
-let messages = []
 
 console.log('Developer mode: ' + devMode)
 
@@ -35,7 +33,6 @@ wss.on('connection', (stream) => {
     let con = stream
 
     stream.on('message', (message) => {
-        console.log(message.toString())
         connections.forEach(con => {
             con.send(message.toString())
         })

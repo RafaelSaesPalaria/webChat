@@ -6,7 +6,6 @@ let content = {
     }
 }
 
-let messages = []
 let namei = window.sessionStorage.getItem("name")
 
 
@@ -19,7 +18,12 @@ let url = window.location.href.replace('http://','').split(':')[0]
 let wss = new WebSocket('ws://'+url+':3001')
 wss.onopen = () => {
     wss.onmessage = (message) => {
-        console.log(JSON.parse(message.data))
+
+        // Remove excess (11 is the max)
+        if (content.general.children.length>10) {
+            content.general.removeChild(content.general.children[0])
+        }
+
         writeMessage(JSON.parse(message.data))
     }
 }
