@@ -21,6 +21,7 @@ div#general-talk {
     width: 600px;
     height: 540px;
     border: 1px solid black;
+    overflow-y: hidden;
 }
 
 div#general-talk div#message {
@@ -31,11 +32,13 @@ div#general-talk div#message {
 div#general-talk div#message span#message {
     display: block;
     font-size: 20px;
+    word-wrap: break-word;
 }
 
 div#general-talk div#message span#author {
     display: block;
     text-align: right;
+    word-wrap: break-word;
     font-size: 13px;
     color: rgb(0, 71, 202);
 }
