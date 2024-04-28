@@ -7,16 +7,18 @@ let content = {
 }
 
 content.submit.addEventListener("click",() => {
-    let name = content.namei.value
-    let password = content.password ? content.password.value : undefined 
+    let data = {
+        'name' : content.namei.value,
+        'password' : content.password ? content.password.value : undefined 
+    }
+
     xhr.open('POST',location.href.concat('login'))
-    xhr.send(JSON.stringify({"name":name,"password":password}))
+    xhr.send(JSON.stringify(data))
     xhr.onreadystatechange = function() {
         if (xhr.status == 200 & xhr.readyState == xhr.DONE) {
-            window.sessionStorage.setItem("name",name)
-            document.open()
+            
+            window.sessionStorage.setItem("name",data.name)
             document.write(xhr.response)
-            document.close()
         }
     }
 })

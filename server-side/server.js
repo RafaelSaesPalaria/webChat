@@ -13,7 +13,8 @@ let devMode = true
 console.log('Developer mode: ' + devMode)
 
 let serverName = devMode ? 'MyServer' : rd.question('Server name: ')
-let port = devMode ? 3000 : rd.question('Port: ')
+let port = devMode ? 3000 : rd.question('Server Port: ')
+let socket = devMode ? 3001 : rd.question('Socket Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
 let serverData = {
@@ -23,7 +24,7 @@ let serverData = {
 
 // WEBSOCKET
 
-let wss = new ws.Server({port:3001}, () => {
+let wss = new ws.Server({'port':socket}, () => {
     console.log('Web socket created')
 })
 
