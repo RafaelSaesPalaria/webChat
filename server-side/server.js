@@ -64,6 +64,7 @@ app.post('/login', (req, res) => {
         body+=chunk
     })
     req.on('end',() => {
+        console.log(JSON.parse(body))
         body = (JSON.parse(body))
         if (body.password==password || password===undefined) {
             lastName = body.name

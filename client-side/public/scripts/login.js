@@ -1,5 +1,3 @@
-let xhr = new XMLHttpRequest()
-
 let content = {
     namei : document.querySelector('input#name'),
     password : document.querySelector('input#password'),
@@ -12,18 +10,19 @@ content.submit.addEventListener("click",() => {
         'password' : content.password ? content.password.value : undefined 
     }
 
-    xhr.open('POST',location.href.concat('login'))
-    xhr.send(JSON.stringify(data))
-    xhr.onreadystatechange = function() {
-        if (xhr.status == 200 & xhr.readyState == xhr.DONE) {
-            let response = JSON.parse(xhr.response)
-
+    fetch('/login',{
+        'method':'POST',
+        'body':JSON.stringify(data)})
+        
+        .then((response) => response.json().then((response) => {
             window.sessionStorage.setItem("name",data.name)
             if (response['todo']==='redirect') {
                 window.location.href=(response['href'])
             }
-            
-        }
-    }
+        })).catch((err) => {
+            console.log(err)
+        })
+
+    
 })
 
