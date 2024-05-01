@@ -5,6 +5,7 @@ const express = require('express')
 const app = express()
 const ws = require('ws')
 const path = require('path');
+const routes = require('./controller.js')
 
 // SERVER SETTINGS
 
@@ -50,39 +51,12 @@ app.listen(port, () => {
     console.log('Server open')
 })
 
-// MIDDLEWARE
 app.use(express.static(path.join(__dirname, '..', 'client-side', 'public')));
 
-app.use((req, res, next) => {
-    console.log('User requesting: ',req.url)
-    next()
-})
+// MIDDLEWARE
 
-app.post('/login', (req, res) => {
-    let body = ''
-    req.on('data', (chunk) => {
-        body+=chunk
-    })
-    req.on('end',() => {
-        console.log(JSON.parse(body))
-        body = (JSON.parse(body))
-        if (body.password==password || password===undefined) {
-            lastName = body.name
-            res.json({
-                'todo':'redirect',
-                'href':'/chat'
-            })
-        }
-    })
-})
-app.use('/chat', (req, res) => {
-    res.render('chat',{serverData})
-})
-
-app.use('/',(req, res) => {
-    res.render('login',{serverData})
-})
-app.use((req, res) => {
-    console.log('404: ',req.url)
-    res.status(404).render('login',{serverData})
-})
+app.use((req, res, next) => routes.look_url)
+app.post('/login', (req, res) => routes.post_login)
+app.use('/chat', (req, res) => routes.get_chat)
+app.use('/',(req, res) => routes.get_login)
+app.use((req, res) => routes.not_found)
