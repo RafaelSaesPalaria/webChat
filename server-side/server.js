@@ -67,9 +67,15 @@ app.post('/login', (req, res) => {
         body = (JSON.parse(body))
         if (body.password==password || password===undefined) {
             lastName = body.name
-            res.render('chat.ejs',{serverData})
+            res.json({
+                'todo':'redirect',
+                'href':'/chat'
+            })
         }
     })
+})
+app.use('/chat', (req, res) => {
+    res.render('chat',{serverData})
 })
 
 app.use('/',(req, res) => {

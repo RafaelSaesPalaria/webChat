@@ -16,9 +16,13 @@ content.submit.addEventListener("click",() => {
     xhr.send(JSON.stringify(data))
     xhr.onreadystatechange = function() {
         if (xhr.status == 200 & xhr.readyState == xhr.DONE) {
-            
+            let response = JSON.parse(xhr.response)
+
             window.sessionStorage.setItem("name",data.name)
-            document.write(xhr.response)
+            if (response['todo']==='redirect') {
+                window.location.href=(response['href'])
+            }
+            
         }
     }
 })
