@@ -9,7 +9,7 @@ console.log('Developer mode: ' + devMode)
 
 let serverName = devMode ? 'MyServer' : rd.question('Server name: ')
 let server_port = devMode ? 3009 : rd.question('Server Port: ')
-let socket_port = devMode ? 3002 : rd.question('Socket Port: ')
+let socket_port = devMode ? 3012 : rd.question('Socket Port: ')
 let password = devMode ? 123 : rd.question('Password: ')
 
 let server_data = {

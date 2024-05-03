@@ -15,7 +15,7 @@ content.me.send.addEventListener("click", function() {
 
 let url = window.location.href.replace('http://','').split(':')[0]
 
-let wss = new WebSocket('ws://'+url+':3002')
+let wss = new WebSocket('ws://'+url+':'+socket_port)
 wss.onopen = () => {
     wss.onmessage = (message) => {
 
