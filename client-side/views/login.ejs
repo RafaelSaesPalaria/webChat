@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
     <link rel="stylesheet" href="styles/login.css">
-    <title><%= serverData.serverName%></title>
+    <title><%= server_data.serverName%></title>
 </head>
 <body>
     <div id="title">
         <h1>Chat</h1>
     </div>
     <main>
-        <h1><%= serverData.serverName%></h1>
+        <h1><%= server_data.serverName%></h1>
         <input type="text" name="" id="name" placeholder="Your Name">
-        <% if (serverData.hasPassword) {%>
+        <% if (server_data.hasPassword) {%>
         <input type="password" name="" id="password" placeholder="Server Password">
         <%}%>
         <input type="submit" value="Enter" id="submit">
