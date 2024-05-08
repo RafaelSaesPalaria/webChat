@@ -21,20 +21,29 @@ function create_socket(port) {
     })
 }
 
-wss = create_socket(server_data.socket_port)
 let connections = []
+wss = create_socket(server_data.socket_port)
+connect_socket(wss)
 
-wss.on('connection', (stream) => {
-    let con = stream
 
-    stream.on('message', (message) => {
-        connections.forEach(con => {
-            con.send(message.toString())
+/**
+ * @Called when a client connect to the socket
+ * @Do resend the message to all connections
+ * @param {WebSocket.Server} wss 
+ */
+function connect_socket(wss) {
+    wss.on('connection', (stream) => {
+        let con = stream
+
+        stream.on('message', (message) => {
+            connections.forEach(con => {
+                con.send(message.toString())
+            })
         })
-    })
 
-    connections.push(con)
-})
+        connections.push(con)
+    })
+}
 // EXPRESS SETTINGS
 
 app.set('view engine','ejs')
