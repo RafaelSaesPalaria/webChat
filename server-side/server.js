@@ -9,10 +9,19 @@ const { routes, server_data } = require('./controller.js')
 
 // WEBSOCKET
 
-let wss = new ws.Server({'port':server_data.socket_port}, () => {
-    console.log('Web socket created')
-})
+/**
+ * @Called at the start of the server
+ * @Do Create a socket server
+ * @param {Number} port 
+ * @returns the server
+ */
+function create_socket(port) {
+   return new ws.Server({'port':port}, () => {
+        console.log('Web socket created')
+    })
+}
 
+wss = create_socket(server_data.socket_port)
 let connections = []
 
 wss.on('connection', (stream) => {
