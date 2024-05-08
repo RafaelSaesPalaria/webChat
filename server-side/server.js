@@ -3,47 +3,14 @@ const fs = require('fs')
 const rd = require('readline-sync')
 const express = require('express')
 const app = express()
-const ws = require('ws')
 const path = require('path');
 const { routes, server_data } = require('./controller.js')
+const WebServer_Socket = require('./webserver_socket.js')
 
 // WEBSOCKET
 
-/**
- * @Called at the start of the server
- * @Do Create a socket server
- * @param {Number} port 
- * @returns the server
- */
-function create_socket(port) {
-   return new ws.Server({'port':port}, () => {
-        console.log('Web socket created')
-    })
-}
+new WebServer_Socket(server_data.socket_port)
 
-let connections = []
-wss = create_socket(server_data.socket_port)
-connect_socket(wss)
-
-
-/**
- * @Called when a client connect to the socket
- * @Do resend the message to all connections
- * @param {WebSocket.Server} wss 
- */
-function connect_socket(wss) {
-    wss.on('connection', (stream) => {
-        let con = stream
-
-        stream.on('message', (message) => {
-            connections.forEach(con => {
-                con.send(message.toString())
-            })
-        })
-
-        connections.push(con)
-    })
-}
 // EXPRESS SETTINGS
 
 app.set('view engine','ejs')
