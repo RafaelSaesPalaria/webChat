@@ -31,19 +31,14 @@ module.exports = class WebServer_Socket {
 
             stream.on('message', (message) => {
                 let msg = JSON.parse(message)
-                console.log(msg)
                 if(msg.todo==='write-on-server') {
                     this.connections.forEach(con => {
-                        console.log('S')
                         con.send(message.toString())
                     })
                 } else if (msg.todo === 'connect') {
-                    console.log(password)
                     if (msg.password == password) {
                         console.log('Connected')
                         this.connections.push(con)
-                    } else {
-                        //TODO end Stream
                     }
                 }
             })

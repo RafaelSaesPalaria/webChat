@@ -9,6 +9,8 @@ let content = {
 let namei = window.sessionStorage.getItem("name")
 let password = window.sessionStorage.getItem("password")
 
+window.sessionStorage.setItem("name",'')
+window.sessionStorage.setItem("password",'')
 
 content.me.send.addEventListener("click", function() {
     sendMessage(content.me.text.value)
