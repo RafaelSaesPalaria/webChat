@@ -64,5 +64,6 @@ module.exports = {
         post_login,
         not_found
     },
-    server_data
+    server_data,
+    password
 }

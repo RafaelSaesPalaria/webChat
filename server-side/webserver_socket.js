@@ -1,4 +1,6 @@
 const ws = require('ws')
+const { password } = require('./controller.js')
+
 module.exports = class WebServer_Socket {
     constructor(port) {
         this.connections = []
@@ -28,12 +30,23 @@ module.exports = class WebServer_Socket {
             let con = stream
 
             stream.on('message', (message) => {
-                this.connections.forEach(con => {
-                    con.send(message.toString())
-                })
+                let msg = JSON.parse(message)
+                console.log(msg)
+                if(msg.todo==='write-on-server') {
+                    this.connections.forEach(con => {
+                        console.log('S')
+                        con.send(message.toString())
+                    })
+                } else if (msg.todo === 'connect') {
+                    console.log(password)
+                    if (msg.password == password) {
+                        console.log('Connected')
+                        this.connections.push(con)
+                    } else {
+                        //TODO end Stream
+                    }
+                }
             })
-
-            this.connections.push(con)
         })
     }
 }

@@ -7,6 +7,7 @@ let content = {
 }
 
 let namei = window.sessionStorage.getItem("name")
+let password = window.sessionStorage.getItem("password")
 
 
 content.me.send.addEventListener("click", function() {
@@ -17,6 +18,9 @@ let url = window.location.href.replace('http://','').split(':')[0]
 
 let wss = new WebSocket('ws://'+url+':'+socket_port)
 wss.onopen = () => {
+
+    wss.send(JSON.stringify({'todo':'connect','password':password}))
+
     wss.onmessage = (message) => {
 
         // Remove excess (11 is the max)

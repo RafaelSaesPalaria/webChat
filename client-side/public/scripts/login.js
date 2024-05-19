@@ -16,6 +16,7 @@ content.submit.addEventListener("click",() => {
         
         .then((response) => response.json().then((response) => {
             window.sessionStorage.setItem("name",data.name)
+            window.sessionStorage.setItem("password",data.password)
             if (response['todo']==='redirect') {
                 window.location.href=(response['href'])
             }
