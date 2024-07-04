@@ -1,0 +1,6 @@
+{ 
+    "serverName": "MyServer",
+    "server_port" : "3009",
+    "socket_port" : "3010",
+    "password" : "123"
+}

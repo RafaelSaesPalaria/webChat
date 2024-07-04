@@ -1,23 +1,12 @@
 let app = require('express')
 let routes = app.Router()
+const fs = require('fs')
+let server_data = fs.readFileSync('server/server_config.json','utf-8')
+server_data = JSON.parse(server_data)
 
 // SERVER SETTINGS
+server_data['hasPasword'] = server_data.password ? true : false 
 
-let devMode = true
-
-console.log('Developer mode: ' + devMode)
-
-let serverName = devMode ? 'MyServer' : rd.question('Server name: ')
-let server_port = devMode ? 3009 : rd.question('Server Port: ')
-let socket_port = devMode ? 3012 : rd.question('Socket Port: ')
-let password = devMode ? 123 : rd.question('Password: ')
-
-let server_data = {
-    serverName,
-    server_port,
-    socket_port,
-    hasPassword: password ? true : false 
-}
 
 
 let look_url = (req, res, next) => {
